@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedly - cPanel Installation Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2563eb;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .note {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speedly - cPanel Installation Guide</h1>
+    
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>cPanel hosting account access</li>
+        <li>Node.js 18.0 or higher (contact your hosting provider if not installed)</li>
+        <li>npm 8.0 or higher</li>
+    </ul>
+
+    <h2>Installation Steps</h2>
+    
+    <h3>1. Build the Application</h3>
+    <ol>
+        <li>Run the build command locally:
+            <pre>npm run build</pre>
+        </li>
+        <li>This will create a <code>dist</code> directory with the built files</li>
+    </ol>
+
+    <h3>2. Upload to cPanel</h3>
+    <ol>
+        <li>Log into your cPanel account</li>
+        <li>Navigate to File Manager in cPanel</li>
+        <li>Go to the <code>public_html</code> directory (or your desired subdirectory)</li>
+        <li>Upload all contents from the <code>dist</code> directory</li>
+    </ol>
+
+    <h3>3. Configure .htaccess</h3>
+    <ol>
+        <li>Create or edit the .htaccess file in your website root directory</li>
+        <li>Add the following configuration:
+            <pre>
+&lt;IfModule mod_rewrite.c&gt;
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+&lt;/IfModule&gt;</pre>
+        </li>
+    </ol>
+
+    <div class="note">
+        <strong>Important Notes:</strong>
+        <ul>
+            <li>Ensure proper HTTPS configuration on your domain</li>
+            <li>Configure environment variables in cPanel if required</li>
+            <li>Set appropriate file permissions (usually 644 for files and 755 for directories)</li>
+        </ul>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+        <li>If you see a blank page, check the browser console for errors</li>
+        <li>Verify that all files were uploaded correctly</li>
+        <li>Ensure .htaccess file is properly configured</li>
+        <li>Check server error logs in cPanel</li>
+    </ul>
+
+    <footer>
+        <p>For additional support, please contact our support team at support@speedly.com</p>
+    </footer>
+</body>
+</html>
